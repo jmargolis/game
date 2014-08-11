@@ -5,3 +5,4 @@ describe 'game' do
     expect(Game.start).to be_true
   end
 end
+
