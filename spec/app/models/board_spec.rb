@@ -36,6 +36,38 @@ describe 'board' do
     end
   end
 
+  describe '#index_of_top_row_with_room_for_square' do
+    let(:result) { board.index_of_top_row_with_room_for_square }
+
+    it 'returns first row by default' do
+      expect(result).to eq(0)
+    end
+
+    it 'returns index of first row that has two empty cells in a row' do
+      rows[0].cells.each(&:fill)
+      rows[1].cells[1..Row::NUM_COLUMNS-1].each(&:fill)
+      rows[2].cells[0..2].each(&:fill)
+
+      expect(result).to eq(2)
+    end
+  end
+
+  describe '#best_position_for_square' do
+    let(:result) { board.best_position_for_square }
+
+    it 'returns first column by default' do
+      expect(result).to eq(0)
+    end
+
+    it 'returns best position' do
+      rows[0].cells.each(&:fill)
+      rows[1].cells[1..Row::NUM_COLUMNS-1].each(&:fill)
+      rows[2].cells[0..2].each(&:fill)
+
+      expect(result).to eq(3)
+    end
+  end
+
   describe '#drop_square_at' do
     before do
       rows[0].cells[3].fill
@@ -115,5 +147,4 @@ describe 'board' do
   def partially_fill_row(row)
     row.cells[0..1].each(&:fill)
   end
-
 end

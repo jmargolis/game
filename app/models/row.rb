@@ -24,6 +24,10 @@ class Row
     @cells[position].empty? && @cells[position + 1].empty?
   end
 
+  def index_with_room_for_square
+    (0..NUM_COLUMNS-2).find{ |position| has_room_for_square_at?(position) }
+  end
+
   def clear
     @cells.each(&:clear)
   end

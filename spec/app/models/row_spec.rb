@@ -67,6 +67,20 @@ describe 'row' do
     end
   end
 
+  describe '#index_with_room_for_square' do
+    let(:result) { row.index_with_room_for_square }
+
+    it 'returns nil when there is no room' do
+      row.cells.each(&:fill)
+      expect(result).to be_false
+    end
+
+    it 'returns first position with 2 empty cells in a row' do
+      row.cells[0..3].each(&:fill)
+      expect(result).to eq(4)
+    end
+  end
+
   describe '#clear' do
     before do
       cells.each(&:fill)

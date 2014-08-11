@@ -16,6 +16,14 @@ class Board
     @rows.index{ |row| row.has_room_for_square_at?(position) }
   end
 
+  def index_of_top_row_with_room_for_square
+    @rows.index(&:index_with_room_for_square)
+  end
+
+  def best_position_for_square
+    @rows[index_of_top_row_with_room_for_square].index_with_room_for_square
+  end
+
   def bottom_row
     @rows.first
   end
