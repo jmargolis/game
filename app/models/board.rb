@@ -12,6 +12,10 @@ class Board
     @rows.find(&:has_room?)
   end
 
+  def index_of_top_row_with_room_for_square_at(position)
+    @rows.index{ |row| row.has_room_for_square_at?(position) }
+  end
+
   def bottom_row
     @rows.first
   end
@@ -26,8 +30,20 @@ class Board
     @rows
   end
 
-  def place_square_at(column)
+  def drop_piece_at(piece, position)
+    case piece
+      when :square
+        drop_square_at(position)
+    end
+  end
 
+  def drop_square_at(position)
+    index = index_of_top_row_with_room_for_square_at(position)
+    [index, index + 1].each do |i|
+      row = @rows[i]
+      row.cells[position].fill
+      row.cells[position + 1].fill
+    end
   end
 
   private

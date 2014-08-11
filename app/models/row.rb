@@ -20,6 +20,10 @@ class Row
     @cells.any?(&:empty?)
   end
 
+  def has_room_for_square_at?(position)
+    @cells[position].empty? && @cells[position + 1].empty?
+  end
+
   def clear
     @cells.each(&:clear)
   end

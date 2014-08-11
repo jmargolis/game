@@ -47,6 +47,26 @@ describe 'row' do
     end
   end
 
+  describe '#has_room_for_square_at?' do
+    let(:result) { row.has_room_for_square_at?(3) }
+
+    it 'returns false when position is taken' do
+      cells[3].fill
+      expect(result).to be_false
+    end
+
+    it 'returns false when position is empty, but next position is taken' do
+      cells[4].fill
+      expect(result).to be_false
+    end
+
+    it 'returns true when both position and next are empty' do
+      cells.each(&:fill)
+      cells[3..4].each(&:clear)
+      expect(result).to be_true
+    end
+  end
+
   describe '#clear' do
     before do
       cells.each(&:fill)
@@ -79,7 +99,7 @@ describe 'row' do
     end
   end
 
-  #FIXME: dup code
+  #FIXME: dup code, move to helper (or model)
   def fill_row(row)
     row.cells.each(&:fill)
   end

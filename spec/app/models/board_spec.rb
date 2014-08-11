@@ -26,6 +26,44 @@ describe 'board' do
     end
   end
 
+  describe '#index_of_top_row_with_room_for_square_at' do
+    it 'returns first row with room for square piece' do
+      rows[0].cells[3].fill
+      rows[1].cells[4].fill
+      rows[2].cells[0..2].each(&:fill)
+
+      expect(board.index_of_top_row_with_room_for_square_at(3)).to eq(2)
+    end
+  end
+
+  describe '#drop_square_at' do
+    before do
+      rows[0].cells[3].fill
+      rows[1].cells[4].fill
+      rows[2].cells[0..2].each(&:fill)
+
+      board.drop_square_at(3)
+    end
+
+    it 'fills appropriate cells' do
+      expect(rows[2].cells[3..4].all?(&:occupied?)).to be_true
+      expect(rows[3].cells[3..4].all?(&:occupied?)).to be_true
+    end
+
+    it 'does not fill other cells' do
+      expect(rows[2].cells[5..6].all?(&:empty?)).to be_true
+      expect(rows[3].cells[0..2].all?(&:empty?)).to be_true
+      expect(rows[4]).to be_empty
+    end
+  end
+
+  describe '#drop_piece_at' do
+    it 'drops square' do
+      board.should_receive(:drop_square_at).with(3)
+      board.drop_piece_at(:square, 3)
+    end
+  end
+
   describe '#bottom_row' do
     it 'returns the first row' do
       expect(board.bottom_row).to eq(rows[0])
