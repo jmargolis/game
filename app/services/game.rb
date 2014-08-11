@@ -13,7 +13,6 @@ class Game
     piece = new_piece
     position = position_piece(board, piece)
     board.drop_piece_at(piece, position)
-    board.clear_filled_bottom_rows
     board
   end
 

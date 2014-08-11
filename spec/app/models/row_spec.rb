@@ -102,19 +102,21 @@ describe 'row' do
     end
 
     it 'returns true when both are full' do
-      fill_row(row)
-      fill_row(other_row)
+      row.fill
+      other_row.fill
       expect(result).to be_true
     end
 
     it 'returns false when one is empty and the other is full' do
-      fill_row(row)
+      row.fill
       expect(result).to be_false
     end
   end
 
-  #FIXME: dup code, move to helper (or model)
-  def fill_row(row)
-    row.cells.each(&:fill)
+  describe '#fill' do
+    it 'fills all cell in row' do
+      row.fill
+      expect(cells.each(&:occupied?)).to be_true
+    end
   end
 end

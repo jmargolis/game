@@ -32,6 +32,10 @@ class Row
     @cells.each(&:clear)
   end
 
+  def fill
+    @cells.each(&:fill)
+  end
+
   def cells
     @cells
   end

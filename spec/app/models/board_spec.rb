@@ -10,18 +10,18 @@ describe 'board' do
     end
 
     it 'returns first row when partially full' do
-      partially_fill_row(rows[0])
+      rows[0].cells[0..1].each(&:fill)
       expect(board.top_row_with_room).to eq(rows[0])
     end
 
     it 'returns second row when first row is full' do
-      fill_row(rows[0])
+      rows[0].fill
       expect(board.top_row_with_room).to eq(rows[1])
     end
 
     it 'returns second row when first row is full and second row is partially full' do
-      fill_row(rows[0])
-      partially_fill_row(rows[1])
+      rows[0].fill
+      rows[1].cells[0..1].each(&:fill)
       expect(board.top_row_with_room).to eq(rows[1])
     end
   end
@@ -92,6 +92,7 @@ describe 'board' do
   describe '#drop_piece_at' do
     it 'drops square' do
       board.should_receive(:drop_square_at).with(3)
+      board.should_receive(:clear_filled_bottom_rows)
       board.drop_piece_at(:square, 3)
     end
   end
@@ -138,13 +139,5 @@ describe 'board' do
         expect(rows[1]).to eql(old_row_3)
       end
     end
-  end
-
-  def fill_row(row)
-    row.cells.each(&:fill)
-  end
-
-  def partially_fill_row(row)
-    row.cells[0..1].each(&:fill)
   end
 end

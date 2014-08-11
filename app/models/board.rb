@@ -43,6 +43,8 @@ class Board
       when :square
         drop_square_at(position)
     end
+
+    clear_filled_bottom_rows
   end
 
   def drop_square_at(position)
